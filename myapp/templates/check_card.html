@@ -1,30 +1,222 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Check Card</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Check Card | BankCard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0f172a;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+        }
+
+        .result h2 {
+            margin-top: 0;
+            color: #047857;
+        }
+
+        .result p {
+            margin: 8px 0;
+        }
+
+        .error {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            text-align: center;
+        }
+
+        .back {
+            display: block;
+            margin-top: 20px;
+            padding: 13px;
+            border-radius: 12px;
+            background: #e2e8f0;
+            color: #0f172a;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            background: #cbd5e1;
+        }
+
+        .icon {
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Check Card</h1>
+<div class="container">
 
-<form method="post">
-    {% csrf_token %}
+    <div class="card">
 
-    {{ form.as_p }}
+        <div class="icon">💳</div>
 
-    <button type="submit">Check</button>
-</form>
+        <div class="logo">
+            BankCard
+        </div>
 
-{% if firstname %}
-    <h2>Card found</h2>
+        <h1>Check Card</h1>
 
-    <p>First name: {{ firstname }}</p>
-    <p>Last name: {{ lastname }}</p>
-{% endif %}
+        <div class="subtitle">
+            Enter a card number to find the card owner
+        </div>
 
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Check Card
+            </button>
+        </form>
+
+
+        {% if firstname %}
+
+            <div class="result">
+
+                <h2>✓ Card Found</h2>
+
+                <p>
+                    <strong>First name:</strong>
+                    {{ firstname }}
+                </p>
+
+<p>
+                    <strong>Last name:</strong>
+                    {{ lastname }}
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <a class="back" href="{% url 'acc_detail' request.user.account.pk %}">
+            ← Back to Account
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>

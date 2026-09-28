@@ -3,25 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Account | BankCard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .header {
+            background: #0f172a;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .phone {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .account-card {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.25);
+            margin-bottom: 30px;
+        }
+
+        .account-title {
+            font-size: 15px;
+            color: #bfdbfe;
+            margin-bottom: 15px;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .balance-label {
+            color: #bfdbfe;
+            font-size: 14px;
+        }
+
+        .balance {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .details {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .details h2 {
+            margin-top: 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #64748b;
+        }
+
+        .value {
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .buttons a {
+            text-decoration: none;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 13px;
+            background: #2563eb;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .logout {
+            text-align: center;
+        }
+
+        .logout button {
+            padding: 13px 35px;
+            border: none;
+            border-radius: 12px;
+            background: #dc2626;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logout button:hover {
+            background: #b91c1c;
+        }
+
+        @media (max-width: 700px) {
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .name {
+                font-size: 23px;
+            }
+
+            .balance {
+                font-size: 30px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Account detail</h1>
 
-    {{ account.user.phone }}
-    <h3>{{ account.firstname }} {{ account.lastname }}</h3>
-    <p>{{ account.passport_id }}</p>
-    <p>{{ account.address }}</p>
-    <p>{{ account.balance }}</p>
+<header class="header">
+    <div class="logo">🏦 BankCard</div>
+    <div class="phone">{{ account.user.phone }}</div>
+</header>
 
-    <a href="{% url 'cards' %}"><button>My cards</button></a> <br> <br> <br>
-    <a href="{% url 'transfer' %}"><button>Transfer</button></a> <br> <br>
-    <a href="{% url 'transactions' %}"><button>Transactions</button></a> <br> <br> <br>
+<div class="container">
 
+    <div class="welcome">
+        <h1>My Account</h1>
+        <p>Welcome back, {{ account.firstname }}!</p>
+    </div>
 
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
+    <div class="account-card">
+
+        <div class="account-title">
+            BANK ACCOUNT
+        </div>
+
+        <div class="name">
+            {{ account.firstname }} {{ account.lastname }}
+        </div>
+
+        <div class="balance-label">
+            Available Balance
+        </div>
+
+        <div class="balance">
+            {{ account.balance }}
+        </div>
+
+    </div>
+
+    <div class="details">
+
+        <h2>Account Information</h2>
+
+        <div class="detail-row">
+            <span class="label">Phone</span>
+            <span class="value">{{ account.user.phone }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Passport ID</span>
+            <span class="value">{{ account.passport_id }}</span>
+        </div>
+
+        <div class="detail-row">
+            <span class="label">Address</span>
+            <span class="value">{{ account.address }}</span>
+        </div>
+
+    </div>
+
+    <div class="buttons">
+
+        <a href="{% url 'cards' %}">
+            <button class="button">💳 My Cards</button>
+        </a>
+
+        <a href="{% url 'create_card' %}">
+            <button class="button">➕ Create Card</button>
+        </a>
+
+        <a href="{% url 'transfer' %}">
+            <button class="button">💸 Transfer</button>
+        </a>
+
+        <a href="{% url 'transactions' %}">
+            <button class="button">📋 Transactions</button>
+        </a>
+
+        <a href="{% url 'check_phone' %}">
+            <button class="button secondary">🔍 Check Phone</button>
+        </a>
+
+        <a href="{% url 'check_card' %}">
+            <button class="button secondary">💳 Check Card</button>
+        </a>
+
+    </div>
+
+    <div class="logout">
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+    </div>
+
+</div>
+
 </body>
 </html>

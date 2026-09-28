@@ -3,24 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Cards | BankCard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #071426, #0d2a4a, #1261a0);
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #42a5ff;
+        }
+
+        .header-title {
+            font-size: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        .bank-card {
+            min-height: 210px;
+            padding: 25px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #202b3d, #111827);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .bank-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 22px 45px rgba(0,0,0,0.45);
+        }
+
+        .bank-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: rgba(66,165,255,0.12);
+            border-radius: 50%;
+            right: -70px;
+            top: -70px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bank-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .chip {
+            width: 42px;
+            height: 30px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #d6d6d6, #8c8c8c);
+            position: relative;
+        }
+
+        .number {
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-top: 35px;
+            font-weight: bold;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-top: 25px;
+        }
+
+        .label {
+            font-size: 10px;
+            color: #9da8b5;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .balance {
+            font-size: 16px;
+            color: #42a5ff;
+            font-weight: bold;
+        }
+
+        .type {
+            margin-top: 15px;
+            color: #aeb8c5;
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #1683e8;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0d6fc7;
+            transform: translateY(-2px);
+        }
+
+        .account-btn {
+            background: #26384d;
+        }
+
+        .account-btn:hover {
+            background: #344d67;
+        }
+
+.empty {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 18px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .header-title {
+                font-size: 25px;
+            }
+
+            .number {
+                font-size: 18px;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <h1>My cards</h1>
 
-    {% for card in cards %}
-    <a href="{% url 'card_detail' card.pk %}">
-    <h3>{{ card.owner.firstname }} {{card.owner.lastname}}</h3>
-    <p>{{ card.card_number }}</p>
-    <p>{{ card.type }}</p>
-    <p>{{ card.balance }}</p> <br> <br> <br>
-    </a>
-    {% endfor %}
+<div class="container">
 
-    <a href="{% url 'create_card' %}"><button>Add card</button></a> <br> <br> <br>
+    <div class="header">
+        <div class="logo">Bank<span>Card</span></div>
+        <h1 class="header-title">My Cards</h1>
+    </div>
 
-    <a href=" {% url 'acc_detail' user.pk %}"><button >Account</button></a>
+    <div class="cards">
 
+        {% for card in cards %}
+
+        <a class="card-link" href="{% url 'card_detail' card.pk %}">
+            <div class="bank-card">
+
+                <div class="card-top">
+                    <div class="bank-name">BankCard</div>
+                    <div class="chip"></div>
+                </div>
+
+                <div class="number">
+                    {{ card.card_number }}
+                </div>
+
+                <div class="card-bottom">
+
+                    <div>
+                        <div class="label">Card Holder</div>
+                        <div class="value">
+                            {{ card.owner.firstname }} {{card.owner.lastname}}
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="label">Balance</div>
+                        <div class="balance">
+                            {{ card.balance }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="type">
+                    {{ card.type }}
+                </div>
+
+            </div>
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="actions">
+
+        <a href="{% url 'create_card' %}">
+            <button>Add Card</button>
+        </a>
+
+        <a href="{% url 'acc_detail' user.pk %}">
+            <button class="account-btn">← Account</button>
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>

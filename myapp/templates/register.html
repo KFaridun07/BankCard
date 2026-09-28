@@ -1,19 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | BankCard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #071426, #0d2a4a, #1261a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-box {
+            width: 100%;
+            max-width: 450px;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #172235;
+            margin-bottom: 10px;
+        }
+
+        .logo span {
+            color: #1683e8;
+        }
+
+        h1 {
+            text-align: center;
+            color: #172235;
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        form p {
+            margin-bottom: 18px;
+            color: #26384d;
+            font-weight: bold;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 7px;
+            border: 1px solid #d5dce5;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: #1683e8;
+            box-shadow: 0 0 0 3px rgba(22, 131, 232, 0.12);
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            background: #1683e8;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #0d6fc7;
+            transform: translateY(-2px);
+        }
+
+        .login {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #1683e8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .login:hover {
+            text-decoration: underline;
+        }
+
+        .security {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Register</h1>
+<div class="register-box">
 
-<form method="post">
-    {% csrf_token %}
+    <div class="logo">
+        Bank<span>Card</span>
+    </div>
 
-    {{ form.as_p }}
+    <h1>Create Account</h1>
 
-    <button type="submit">Register</button>
-</form>
+    <p class="subtitle">
+        Create your BankCard account
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit">Register</button>
+    </form>
+
+    <a class="login" href="{% url 'login' %}">
+        Already have an account? Login
+    </a>
+
+    <p class="security">
+        🔒 Your information is protected
+    </p>
+
+</div>
 
 </body>
 </html>

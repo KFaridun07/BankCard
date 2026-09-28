@@ -1,68 +1,283 @@
+Ф, [28.09.2026 15:35]
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Transactions</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions | BankCard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #071426, #0d2a4a, #1261a0);
+            padding: 40px 20px;
+            color: #172235;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #42a5ff;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        .filters {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .filters a {
+            text-decoration: none;
+            color: #26384d;
+            background: #edf2f7;
+            padding: 10px 22px;
+            border-radius: 9px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .filters a:hover {
+            background: #1683e8;
+            color: white;
+        }
+
+        .transaction {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 18px;
+            padding: 23px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            transition: 0.2s;
+        }
+
+        .transaction:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .transaction-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e9ee;
+        }
+
+        .amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1683e8;
+        }
+
+        .date {
+            color: #8a96a3;
+            font-size: 13px;
+        }
+
+        .info {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            background: #f5f8fb;
+            border-radius: 10px;
+        }
+
+        .info-title {
+            color: #7b8794;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-text {
+            color: #26384d;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .empty {
+            background: rgba(255,255,255,0.97);
+            padding: 45px;
+            border-radius: 18px;
+            text-align: center;
+            color: #7b8794;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .bottom {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .account-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #1683e8;
+            color: white;
+            padding: 13px 28px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .account-btn:hover {
+            background: #0d6fc7;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .filters {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+Ф, [28.09.2026 15:35]
+.transaction-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 7px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Transaction History</h1>
+<div class="container">
 
-<a href="?type=all">All</a>
-<a href="?type=sent">Sent</a>
-<a href="?type=received">Received</a>
-
-<hr>
-
-{% for transaction in transactions %}
-
-    <div>
-
-        <p>Amount: {{ transaction.amount }}</p>
-
-        <p>Date: {{ transaction.created_at }}</p>
-
-        {% if transaction.source_account %}
-            <p>
-                From:
-                {{ transaction.source_account.firstname }}
-                {{ transaction.source_account.lastname }}
-                ({{ transaction.source_account.user.phone }})
-            </p>
-        {% endif %}
-
-        {% if transaction.source_card %}
-            <p>
-                From card:
-                {{ transaction.source_card.card_number }}
-            </p>
-        {% endif %}
-
-        {% if transaction.destination_account %}
-            <p>
-                To:
-                {{ transaction.destination_account.firstname }}
-                {{ transaction.destination_account.lastname }}
-                ({{ transaction.destination_account.user.phone }})
-            </p>
-        {% endif %}
-
-        {% if transaction.destination_card %}
-            <p>
-                To card:
-                {{ transaction.destination_card.card_number }}
-            </p>
-        {% endif %}
-
-        <hr>
-
+    <div class="header">
+        <div class="logo">Bank<span>Card</span></div>
+        <h1>Transaction History</h1>
     </div>
 
-{% empty %}
+    <div class="filters">
+        <a href="?type=all">All</a>
+        <a href="?type=sent">Sent</a>
+        <a href="?type=received">Received</a>
+    </div>
 
-    <p>No transactions yet.</p>
+    {% for transaction in transactions %}
 
-{% endfor %}
+        <div class="transaction">
+
+            <div class="transaction-top">
+
+                <div class="amount">
+                    {{ transaction.amount }}
+                </div>
+
+                <div class="date">
+                    {{ transaction.created_at }}
+                </div>
+
+            </div>
+
+            {% if transaction.source_account %}
+                <div class="info">
+                    <div class="info-title">From account</div>
+
+                    <div class="info-text">
+                        {{ transaction.source_account.firstname }}
+                        {{ transaction.source_account.lastname }}
+                        ({{ transaction.source_account.user.phone }})
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if transaction.source_card %}
+                <div class="info">
+                    <div class="info-title">From card</div>
+
+                    <div class="info-text">
+                        {{ transaction.source_card.card_number }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if transaction.destination_account %}
+                <div class="info">
+                    <div class="info-title">To account</div>
+
+                    <div class="info-text">
+                        {{ transaction.destination_account.firstname }}
+                        {{ transaction.destination_account.lastname }}
+                        ({{ transaction.destination_account.user.phone }})
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if transaction.destination_card %}
+                <div class="info">
+                    <div class="info-title">To card</div>
+
+                    <div class="info-text">
+                        {{ transaction.destination_card.card_number }}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <div class="empty">
+            <h2>No transactions yet.</h2>
+            <p style="margin-top: 10px;">
+                Your transaction history will appear here.
+            </p>
+        </div>
+
+    {% endfor %}
+
+    <div class="bottom">
+        <a class="account-btn" href="{% url 'acc_detail' user.pk %}">
+            ← Back to Account
+        </a>
+    </div>
+
+</div>
 
 </body>
 </html>
-
