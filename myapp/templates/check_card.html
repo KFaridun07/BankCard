@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Card</title>
+</head>
+<body>
+
+<h1>Check Card</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Check</button>
+</form>
+
+{% if firstname %}
+    <h2>Card found</h2>
+
+    <p>First name: {{ firstname }}</p>
+    <p>Last name: {{ lastname }}</p>
+{% endif %}
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+</body>
+</html>

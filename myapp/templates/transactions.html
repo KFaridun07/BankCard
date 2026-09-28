@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+</head>
+<body>
+
+<h1>Transaction History</h1>
+
+<a href="?type=all">All</a>
+<a href="?type=sent">Sent</a>
+<a href="?type=received">Received</a>
+
+<hr>
+
+{% for transaction in transactions %}
+
+    <div>
+
+        <p>Amount: {{ transaction.amount }}</p>
+
+        <p>Date: {{ transaction.created_at }}</p>
+
+        {% if transaction.source_account %}
+            <p>
+                From:
+                {{ transaction.source_account.firstname }}
+                {{ transaction.source_account.lastname }}
+                ({{ transaction.source_account.user.phone }})
+            </p>
+        {% endif %}
+
+        {% if transaction.source_card %}
+            <p>
+                From card:
+                {{ transaction.source_card.card_number }}
+            </p>
+        {% endif %}
+
+        {% if transaction.destination_account %}
+            <p>
+                To:
+                {{ transaction.destination_account.firstname }}
+                {{ transaction.destination_account.lastname }}
+                ({{ transaction.destination_account.user.phone }})
+            </p>
+        {% endif %}
+
+        {% if transaction.destination_card %}
+            <p>
+                To card:
+                {{ transaction.destination_card.card_number }}
+            </p>
+        {% endif %}
+
+        <hr>
+
+    </div>
+
+{% empty %}
+
+    <p>No transactions yet.</p>
+
+{% endfor %}
+
+</body>
+</html>
+
